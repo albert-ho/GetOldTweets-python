@@ -80,6 +80,10 @@ class TweetManager:
 		urlGetData = ''
 		if hasattr(tweetCriteria, 'username'):
 			urlGetData += ' from:' + tweetCriteria.username
+		
+		# @@@@@@@@@@ I ADDED THIS IN @@@@@@@@@@
+		if hasattr(tweetCriteria, 'target'):
+			urlGetData += ' to:' + tweetCriteria.target
 			
 		if hasattr(tweetCriteria, 'since'):
 			urlGetData += ' since:' + tweetCriteria.since
@@ -118,5 +122,5 @@ class TweetManager:
 			return
 		
 		dataJson = json.loads(jsonResponse)
-		
+
 		return dataJson		
