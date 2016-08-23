@@ -11,6 +11,8 @@ def main(argv):
 	if len(argv) == 1 and argv[0] == '-h':
 		print """\nTo use this jar, you can pass the folowing attributes:
     username: Username of a specific twitter account (without @)
+    # @@@@@@@@@@ I ADDED THIS IN @@@@@@@@@@
+    target: Username of account to which tweet is directed towards (i.e. the account mentioned in the tweet)
        since: The lower bound date (yyyy-mm-aa)
        until: The upper bound date (yyyy-mm-aa)
  querysearch: A query text to be matched
@@ -28,14 +30,19 @@ def main(argv):
 		return
  
 	try:
-		opts, args = getopt.getopt(argv, "", ("username=", "since=", "until=", "querysearch=", "maxtweets="))
+		# @@@@@@@@@@ I EDITED @@@@@@@@@@
+		opts, args = getopt.getopt(argv, "", ("username=", "target=", "since=", "until=", "querysearch=", "maxtweets="))
 		
 		tweetCriteria = got.manager.TweetCriteria()
 		
 		for opt,arg in opts:
 			if opt == '--username':
 				tweetCriteria.username = arg
-				
+			
+			# @@@@@@@@@@ I ADDED THIS IN @@@@@@@@@@
+			elif opt == '--target':
+				tweetCriteria.target = arg
+			
 			elif opt == '--since':
 				tweetCriteria.since = arg
 				
