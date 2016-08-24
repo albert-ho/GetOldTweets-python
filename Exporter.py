@@ -11,13 +11,12 @@ def main(argv):
 	if len(argv) == 1 and argv[0] == '-h':
 		print """\nTo use this jar, you can pass the folowing attributes:
     username: Username of a specific twitter account (without @)
-    # @@@@@@@@@@ I ADDED THIS IN @@@@@@@@@@
     target: Username of account to which tweet is directed towards (i.e. the account mentioned in the tweet)
        since: The lower bound date (yyyy-mm-aa)
        until: The upper bound date (yyyy-mm-aa)
  querysearch: A query text to be matched
    maxtweets: The maximum number of tweets to retrieve
-     # @@@@@@@@@@ I ADDED THIS IN @@@@@@@@@@
+      hateid: The ID corresponding to the dataset that the tweet belongs to (yyyymmrr) where 'r' means rank
      csvfile: The path + name for the .csv file where the tweets will be stored
 
  \nExamples:
@@ -32,17 +31,16 @@ def main(argv):
 		return
  
 	try:
-		# @@@@@@@@@@ I EDITED @@@@@@@@@@
-		opts, args = getopt.getopt(argv, "", ("username=", "target=", "since=", "until=", "querysearch=", "maxtweets=", "csvfile="))
+		opts, args = getopt.getopt(argv, "", ("username=", "target=", "since=", "until=", "querysearch=", "maxtweets=", "hateid=", "csvfile="))
 		
 		tweetCriteria = got.manager.TweetCriteria()
 		csvfile = "output_got.csv"
+		hateid = "00000000"
 		
 		for opt,arg in opts:
 			if opt == '--username':
 				tweetCriteria.username = arg
 			
-			# @@@@@@@@@@ I ADDED THIS IN @@@@@@@@@@
 			elif opt == '--target':
 				tweetCriteria.target = arg
 			
@@ -58,19 +56,22 @@ def main(argv):
 			elif opt == '--maxtweets':
 				tweetCriteria.maxTweets = int(arg)
 		
-			# @@@@@@@@@@ I ADDED THIS IN @@@@@@@@@@
+			elif opt == '--hateid':
+				hateid = arg
+		
 			elif opt == '--csvfile':
 				csvfile = arg
-				
+		
 		outputFile = codecs.open(csvfile, "w+", "utf-8")
 		
-		outputFile.write('username;date;retweets;favorites;text;geo;mentions;hashtags;id;permalink')
+		outputFile.write('username;date;retweets;favorites;text;geo;mentions;hashtags;id;permalink;hateid')
 		
 		print 'Searching...\n'
 		
 		def receiveBuffer(tweets):
 			for t in tweets:
-				outputFile.write(('\n%s;%s;%d;%d;"%s";%s;%s;%s;"%s";%s' % (t.username, t.date.strftime("%Y-%m-%d %H:%M"), t.retweets, t.favorites, t.text, t.geo, t.mentions, t.hashtags, t.id, t.permalink)))
+				t.hateid = hateid
+				outputFile.write(('\n%s;%s;%d;%d;"%s";%s;%s;%s;"%s";%s;%s' % (t.username, t.date.strftime("%Y-%m-%d %H:%M"), t.retweets, t.favorites, t.text, t.geo, t.mentions, t.hashtags, t.id, t.permalink, t.hateid)))
 			outputFile.flush();
 			print 'More %d saved on file...\n' % len(tweets)
 		
