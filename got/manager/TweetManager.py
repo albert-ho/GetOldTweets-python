@@ -37,24 +37,14 @@ class TweetManager:
 				retweets = int(tweetPQ("span.ProfileTweet-action--retweet span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""));
 				favorites = int(tweetPQ("span.ProfileTweet-action--favorite span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""));
 				dateSec = int(tweetPQ("small.time span.js-short-timestamp").attr("data-time"));
-				id = tweetPQ.attr("data-tweet-id");
-				permalink = tweetPQ.attr("data-permalink-path");
+				id_str = str(tweetPQ.attr("data-tweet-id"));
 				
-				geo = ''
-				geoSpan = tweetPQ('span.Tweet-geo')
-				if len(geoSpan) > 0:
-					geo = geoSpan.attr('title')
-				
-				tweet.id = id
-				tweet.permalink = 'https://twitter.com' + permalink
+				tweet.id_str = id_str
 				tweet.username = usernameTweet
 				tweet.text = txt
-				tweet.date = datetime.datetime.fromtimestamp(dateSec)
+				tweet.date = datetime.datetime.utcfromtimestamp(dateSec)
 				tweet.retweets = retweets
 				tweet.favorites = favorites
-				tweet.mentions = " ".join(re.compile('(@\\w*)').findall(tweet.text))
-				tweet.hashtags = " ".join(re.compile('(#\\w*)').findall(tweet.text))
-				tweet.geo = geo
 				
 				results.append(tweet)
 				resultsAux.append(tweet)
@@ -81,7 +71,6 @@ class TweetManager:
 		if hasattr(tweetCriteria, 'username'):
 			urlGetData += ' from:' + tweetCriteria.username
 		
-		# @@@@@@@@@@ I ADDED THIS IN @@@@@@@@@@
 		if hasattr(tweetCriteria, 'target'):
 			urlGetData += ' to:' + tweetCriteria.target
 			

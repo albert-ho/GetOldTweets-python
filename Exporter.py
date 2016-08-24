@@ -64,14 +64,15 @@ def main(argv):
 		
 		outputFile = codecs.open(csvfile, "w+", "utf-8")
 		
-		outputFile.write('username;date;retweets;favorites;text;geo;mentions;hashtags;id;permalink;hateid')
+		outputFile.write('hateid;target;id_str;username;date;retweets;favorites;text')
 		
 		print 'Searching...\n'
 		
 		def receiveBuffer(tweets):
 			for t in tweets:
 				t.hateid = hateid
-				outputFile.write(('\n%s;%s;%d;%d;"%s";%s;%s;%s;"%s";%s;%s' % (t.username, t.date.strftime("%Y-%m-%d %H:%M"), t.retweets, t.favorites, t.text, t.geo, t.mentions, t.hashtags, t.id, t.permalink, t.hateid)))
+				t.target = tweetCriteria.target
+				outputFile.write(('\n%s;%s;%s;%s;%s;%d;%d;"%s"' % (t.hateid, t.target, t.id_str, t.username, t.date.strftime("%Y-%m-%d %H:%M"), t.retweets, t.favorites, t.text)))
 			outputFile.flush();
 			print 'More %d saved on file...\n' % len(tweets)
 		
