@@ -17,6 +17,8 @@ def main(argv):
        until: The upper bound date (yyyy-mm-aa)
  querysearch: A query text to be matched
    maxtweets: The maximum number of tweets to retrieve
+     # @@@@@@@@@@ I ADDED THIS IN @@@@@@@@@@
+     csvfile: The path + name for the .csv file where the tweets will be stored
 
  \nExamples:
  # Example 1 - Get tweets by username [barackobama]
@@ -31,9 +33,10 @@ def main(argv):
  
 	try:
 		# @@@@@@@@@@ I EDITED @@@@@@@@@@
-		opts, args = getopt.getopt(argv, "", ("username=", "target=", "since=", "until=", "querysearch=", "maxtweets="))
+		opts, args = getopt.getopt(argv, "", ("username=", "target=", "since=", "until=", "querysearch=", "maxtweets=", "csvfile="))
 		
 		tweetCriteria = got.manager.TweetCriteria()
+		csvfile = "output_got.csv"
 		
 		for opt,arg in opts:
 			if opt == '--username':
@@ -55,7 +58,11 @@ def main(argv):
 			elif opt == '--maxtweets':
 				tweetCriteria.maxTweets = int(arg)
 		
-		outputFile = codecs.open("output_got.csv", "w+", "utf-8")
+			# @@@@@@@@@@ I ADDED THIS IN @@@@@@@@@@
+			elif opt == '--csvfile':
+				csvfile = arg
+				
+		outputFile = codecs.open(csvfile, "w+", "utf-8")
 		
 		outputFile.write('username;date;retweets;favorites;text;geo;mentions;hashtags;id;permalink')
 		
@@ -73,7 +80,7 @@ def main(argv):
 		print 'Arguments parser error, try -h' + arg
 	finally:
 		outputFile.close()
-		print 'Done. Output file generated "output_got.csv".'
+		print ('Done. Output file generated at %s.' % (csvfile))
 
 if __name__ == '__main__':
 	main(sys.argv[1:])
