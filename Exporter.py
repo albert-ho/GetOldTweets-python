@@ -62,9 +62,7 @@ def main(argv):
 			elif opt == '--csvfile':
 				csvfile = arg
 		
-		outputFile = codecs.open(csvfile, "w+", "utf-8")
-		
-		outputFile.write('hateid;target;id_str;username;date;retweets;favorites;text')
+		outputFile = codecs.open(csvfile, "a+", "utf-8")
 		
 		print 'Searching...\n'
 		
@@ -72,7 +70,7 @@ def main(argv):
 			for t in tweets:
 				t.hateid = hateid
 				t.target = tweetCriteria.target
-				outputFile.write(('\n%s;%s;%s;%s;%s;%d;%d;"%s"' % (t.hateid, t.target, t.id_str, t.username, t.date.strftime("%Y-%m-%d %H:%M"), t.retweets, t.favorites, t.text)))
+				outputFile.write(('%s;%s;%s;%s;%s;%d;%d;"%s"\n' % (t.hateid, t.target, t.id_str, t.username, t.date.strftime("%Y-%m-%d %H:%M"), t.retweets, t.favorites, t.text)))
 			outputFile.flush();
 			print 'More %d saved on file...\n' % len(tweets)
 		
