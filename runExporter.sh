@@ -1,1 +1,1 @@
-python Exporter.py --target 'RondaRousey' --since 2015-08-02 --until 2015-08-03 --maxtweets 100 --hateid 20150802 --csvfile ~/Desktop/BitterTweets/Data/20150802.csv
+python Exporter.py --target 'KingJames' --since 2016-06-01 --until 2016-06-21 --hateid 20160605 --maxtweets 100 --csvfile ~/Desktop/BitterTweets/Data/testKingJames.csv
