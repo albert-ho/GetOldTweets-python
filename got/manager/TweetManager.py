@@ -1,12 +1,50 @@
 import urllib,urllib2,json,re,datetime,sys,cookielib
 from .. import models
 from pyquery import PyQuery
+import lxml
+
+################################################
+no_default='<NoDefault>'
+def text(html_thing, value=no_default):
+
+	if value is no_default:
+		if not html_thing:
+			return None
+
+		text = []
+
+		def add_text(tag, no_tail=False, depth=0):
+			print type(tag)
+			if tag.text and not isinstance(tag, lxml.etree._Comment):
+				text.append(tag.text)
+			for child in tag.getchildren():
+				# DO SOMETHING TO HANDLE TAGS WITH ATTRIBUTES EMBEDDED INSIDE HREFS!!!!!!!!!
+				####
+				#if depth>=0:
+				#	print child.text
+				#print depth
+				####
+				add_text(child, depth=depth+1)
+			if not no_tail and tag.tail:
+				text.append(tag.tail)
+
+		for tag in html_thing:
+			add_text(tag, no_tail=True)
+		return ''.join([t.strip() for t in text if t.strip()])
+
+	for tag in html_thing:
+		for child in tag.getchildren():
+			tag.remove(child)
+		tag.text = value
+	return html_thing
+###############################################
+
 
 class TweetManager:
 	
 	def __init__(self):
 		pass
-		
+ 
 	@staticmethod
 	def getTweets(tweetCriteria, receiveBuffer = None, bufferLength = 100):
 		refreshCursor = ''
@@ -22,7 +60,7 @@ class TweetManager:
 			if len(json['items_html'].strip()) == 0:
 				break
 
-			refreshCursor = json['min_position']			
+			refreshCursor = json['min_position']
 			tweets = PyQuery(json['items_html'])('div.js-stream-tweet')
 			
 			if len(tweets) == 0:
@@ -31,9 +69,16 @@ class TweetManager:
 			for tweetHTML in tweets:
 				tweetPQ = PyQuery(tweetHTML)
 				tweet = models.Tweet()
-							
+				
 				usernameTweet = tweetPQ("span.username.js-action-profile-name b").text();
-				txt = re.sub(r"\s+", " ", tweetPQ("p.js-tweet-text").text().replace('# ', '#').replace('@ ', '@'));
+				
+				########################
+				# TESTING123
+				#txt = re.sub(r"\s+", " ", tweetPQ("p.js-tweet-text").text().replace('# ', '#').replace('@ ', '@'));
+				txt = text(tweetPQ("p.js-tweet-text"))
+				print tweetPQ("p.js-tweet-text")
+				#########################
+				
 				retweets = int(tweetPQ("span.ProfileTweet-action--retweet span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""));
 				favorites = int(tweetPQ("span.ProfileTweet-action--favorite span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""));
 				dateSec = int(tweetPQ("small.time span.js-short-timestamp").attr("data-time"));

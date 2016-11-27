@@ -1,0 +1,63 @@
+Searching...
+
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<p class="TweetTextSize  js-tweet-text tweet-text" lang="en" data-aria-label-part="0"><a href="/SarahPalinUSA" class="twitter-atreply pretty-link js-nav" dir="ltr" data-mentioned-user-id="65493023"><s>@</s><b>SarahPalinUSA</b></a> if you ever decided to model in Playboy I would buy that subscription just for the article.</p>
+
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<p class="TweetTextSize  js-tweet-text tweet-text" lang="en" data-aria-label-part="0"><a href="/SarahPalinUSA" class="twitter-atreply pretty-link js-nav" dir="ltr" data-mentioned-user-id="65493023"><s>@</s><b>SarahPalinUSA</b></a> Trump 2016.</p>
+
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<p class="TweetTextSize  js-tweet-text tweet-text" lang="und" data-aria-label-part="0"><a href="/SarahPalinUSA" class="twitter-atreply pretty-link js-nav" dir="ltr" data-mentioned-user-id="65493023"><s>@</s><b>SarahPalinUSA</b></a> <a href="/FoxNews" class="twitter-atreply pretty-link js-nav" dir="ltr" data-mentioned-user-id="1367531"><s>@</s><b>FoxNews</b></a> wow!</p>
+
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+<class 'lxml.html.HtmlElement'>
+
+<p class="TweetTextSize  js-tweet-text tweet-text" lang="en" data-aria-label-part="0">
+
+<a href="/SarahPalinUSA" class="twitter-atreply pretty-link js-nav" dir="ltr" data-mentioned-user-id="65493023">
+
+<s>@</s>
+<b>SarahPalinUSA</b>
+
+</a> 
+
+Did you know M &amp; M Designs has a Green Energy powered waterway cleanup unit, Help fund us at
+
+
+<a href="https://t.co/snY9W94GlK" rel="nofollow" dir="ltr" data-expanded-url="https://www.gofundme.com/hamfb9qc" class="twitter-timeline-link u-hidden" target="_blank" title="https://www.gofundme.com/hamfb9qc">
+
+<span class="tco-ellipsis"/>
+<span class="invisible">
+
+https://www.
+
+</span><span class="js-display-url">
+
+gofundme.com/hamfb9qc
+
+</span><span class="invisible"/><span class="tco-ellipsis"><span class="invisible">&#160;</span></span></a></p>
+
+More 4 saved on file...
+
+Done. Output file generated at /home/alberth-ubuntu/Desktop/Test.csv.
