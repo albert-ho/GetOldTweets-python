@@ -6,31 +6,26 @@ import lxml
 ################################################
 no_default='<NoDefault>'
 def text(html_thing, value=no_default):
-
+	
 	if value is no_default:
 		if not html_thing:
 			return None
 
 		text = []
 
-		def add_text(tag, no_tail=False, depth=0):
-			print type(tag)
+		def add_text(tag, inside_href, no_tail=False):
 			if tag.text and not isinstance(tag, lxml.etree._Comment):
 				text.append(tag.text)
 			for child in tag.getchildren():
-				# DO SOMETHING TO HANDLE TAGS WITH ATTRIBUTES EMBEDDED INSIDE HREFS!!!!!!!!!
-				####
-				#if depth>=0:
-				#	print child.text
-				#print depth
-				####
-				add_text(child, depth=depth+1)
+				add_text(child, (tag.tag=='a'))
 			if not no_tail and tag.tail:
 				text.append(tag.tail)
+			if tag.tag == 'a' and not inside_href:
+				text.append(u' ')
 
 		for tag in html_thing:
-			add_text(tag, no_tail=True)
-		return ''.join([t.strip() for t in text if t.strip()])
+			add_text(tag, inside_href=False, no_tail=True)
+		return ''.join(text).strip()
 
 	for tag in html_thing:
 		for child in tag.getchildren():
@@ -72,12 +67,9 @@ class TweetManager:
 				
 				usernameTweet = tweetPQ("span.username.js-action-profile-name b").text();
 				
-				########################
-				# TESTING123
-				#txt = re.sub(r"\s+", " ", tweetPQ("p.js-tweet-text").text().replace('# ', '#').replace('@ ', '@'));
+				#####
 				txt = text(tweetPQ("p.js-tweet-text"))
-				print tweetPQ("p.js-tweet-text")
-				#########################
+				#####
 				
 				retweets = int(tweetPQ("span.ProfileTweet-action--retweet span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""));
 				favorites = int(tweetPQ("span.ProfileTweet-action--favorite span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""));
