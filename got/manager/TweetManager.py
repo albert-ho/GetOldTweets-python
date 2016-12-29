@@ -65,25 +65,30 @@ class TweetManager:
 				tweetPQ = PyQuery(tweetHTML)
 				tweet = models.Tweet()
 				
+				lang = tweetPQ("div.js-tweet-text-container p.TweetTextSize.js-tweet-text.tweet-text").attr("lang")
+				if lang != 'en': continue
+				
 				usernameTweet = tweetPQ("span.username.js-action-profile-name b").text();
+				dateSec = int(tweetPQ("small.time span.js-short-timestamp").attr("data-time"));
+				id_str = str(tweetPQ.attr("data-tweet-id"));
 				
 				#####
 				txt = text(tweetPQ("p.js-tweet-text"))
 				#####
 				
-				retweets = int(tweetPQ("span.ProfileTweet-action--retweet span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""));
-				favorites = int(tweetPQ("span.ProfileTweet-action--favorite span.ProfileTweet-actionCount").attr("data-tweet-stat-count").replace(",", ""));
-				dateSec = int(tweetPQ("small.time span.js-short-timestamp").attr("data-time"));
-				id_str = str(tweetPQ.attr("data-tweet-id"));
-				lang = tweetPQ("div.js-tweet-text-container p.TweetTextSize.js-tweet-text.tweet-text").attr("lang")
+				#####
+				tweet.retweets = 0
+				tweet.favorites = 0
+				tweet.lang = ''
+				#####
 				
 				tweet.id_str = id_str
 				tweet.username = usernameTweet
 				tweet.text = txt
-				tweet.date = datetime.datetime.utcfromtimestamp(dateSec)
-				tweet.retweets = retweets
-				tweet.favorites = favorites
-				tweet.lang = lang
+				tweet.date = dateSec 
+				# Now an int, instead of formatting to date time 
+				# (eventually to string in data file) #
+				#tweet.date = datetime.datetime.utcfromtimestamp(dateSec)
 				
 				results.append(tweet)
 				resultsAux.append(tweet)

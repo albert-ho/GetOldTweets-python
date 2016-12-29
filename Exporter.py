@@ -70,7 +70,8 @@ def main(argv):
 			for t in tweets:
 				t.hateid = hateid
 				t.target = tweetCriteria.target
-				outputFile.write(('%s;%s;%s;%s;%s;%d;%d;%s;"%s"\n' % (t.hateid, t.target, t.id_str, t.username, t.date.strftime("%Y-%m-%d %H:%M"), t.retweets, t.favorites, t.lang, t.text)))
+				outputFile.write(('%s;%s;%d;%s\n' % (t.id_str, t.username, t.date, t.text)))
+				#outputFile.write(('%s;%s;%s;%s;%s;%d;%d;%s;"%s"\n' % (t.hateid, t.target, t.id_str, t.username, t.date.strftime("%Y-%m-%d %H:%M"), t.retweets, t.favorites, t.lang, t.text)))
 			outputFile.flush();
 			print 'More %d saved on file...\n' % len(tweets)
 		
