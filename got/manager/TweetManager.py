@@ -25,7 +25,7 @@ def text(html_thing, value=no_default):
 
 		for tag in html_thing:
 			add_text(tag, inside_href=False, no_tail=True)
-		return ''.join(text).strip()
+		return ''.join(text).replace('\n', ' ')
 
 	for tag in html_thing:
 		for child in tag.getchildren():
@@ -76,19 +76,11 @@ class TweetManager:
 				txt = text(tweetPQ("p.js-tweet-text"))
 				#####
 				
-				#####
-				tweet.retweets = 0
-				tweet.favorites = 0
-				tweet.lang = ''
-				#####
-				
 				tweet.id_str = id_str
+				tweet.epoch = dateSec 
+				tweet.date_time = datetime.datetime.utcfromtimestamp(dateSec)
 				tweet.username = usernameTweet
 				tweet.text = txt
-				tweet.date = dateSec 
-				# Now an int, instead of formatting to date time 
-				# (eventually to string in data file) #
-				#tweet.date = datetime.datetime.utcfromtimestamp(dateSec)
 				
 				results.append(tweet)
 				resultsAux.append(tweet)
