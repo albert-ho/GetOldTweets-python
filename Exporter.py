@@ -31,11 +31,10 @@ def main(argv):
 		return
  
 	try:
-		opts, args = getopt.getopt(argv, "", ("username=", "target=", "since=", "until=", "querysearch=", "maxtweets=", "hateid=", "csvfile="))
+		opts, args = getopt.getopt(argv, "", ("username=", "target=", "since=", "until=", "querysearch=", "maxtweets=", "csvfile="))
 		
 		tweetCriteria = got.manager.TweetCriteria()
 		csvfile = "output_got.csv"
-		hateid = "00000000"
 		
 		for opt,arg in opts:
 			if opt == '--username':
@@ -56,9 +55,6 @@ def main(argv):
 			elif opt == '--maxtweets':
 				tweetCriteria.maxTweets = int(arg)
 		
-			elif opt == '--hateid':
-				hateid = arg
-		
 			elif opt == '--csvfile':
 				csvfile = arg
 		
@@ -68,9 +64,7 @@ def main(argv):
 		
 		def receiveBuffer(tweets):
 			for t in tweets:
-				t.hateid = hateid
-				t.target = tweetCriteria.target
-				outputFile.write(('%s;%d;%s;%s;%s\n' % (t.id_str, t.epoch, t.date_time, t.username, t.text)))
+				outputFile.write(('%s;%d;%s;%s;%s\n' % (t.id_str, t.epoch, t.date, t.username, t.text)))
 				#outputFile.write(('%s;%s;%s;%s;%s;%d;%d;%s;"%s"\n' % (t.hateid, t.target, t.id_str, t.username, t.date.strftime("%Y-%m-%d %H:%M"), t.retweets, t.favorites, t.lang, t.text)))
 			outputFile.flush();
 			print 'More %d saved on file...\n' % len(tweets)

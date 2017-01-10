@@ -19,13 +19,14 @@ def text(html_thing, value=no_default):
 			for child in tag.getchildren():
 				add_text(child, (tag.tag=='a'))
 			if not no_tail and tag.tail:
+				text.append(u' ')
 				text.append(tag.tail)
 			if tag.tag == 'a' and not inside_href:
 				text.append(u' ')
 
 		for tag in html_thing:
 			add_text(tag, inside_href=False, no_tail=True)
-		return ''.join(text).replace('\n', ' ')
+		return ''.join(text).strip().replace('\n', ' ')
 
 	for tag in html_thing:
 		for child in tag.getchildren():
@@ -78,7 +79,7 @@ class TweetManager:
 				
 				tweet.id_str = id_str
 				tweet.epoch = dateSec 
-				tweet.date_time = datetime.datetime.utcfromtimestamp(dateSec)
+				tweet.date = datetime.datetime.utcfromtimestamp(dateSec)
 				tweet.username = usernameTweet
 				tweet.text = txt
 				
